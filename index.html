@@ -324,13 +324,13 @@
             url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token',
             dataType: 'json',
             cache :false,
-            data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},
+            data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB4dQ93IcaapZkUvbEw9B7jwftQZeU.SXpH6bVf4C0uUtZfA8hgvk9EE4vryy", "client_secret":"F476E3521CAC6A25DEF4B55A6E7A4BA120C5B593CA7C340014838C9F110E7394","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_dL.vrrxEbJ4cNXYleGM0KzF6TX81pNGq0Siw8n_Om73G64gz"},
             success : function (connectData) {
                 var accToken = 'Bearer ' + connectData.access_token;
                 $.ajax({
                     type: 'GET',
                     crossOrigin: true,
-                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/A0000001',
+                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/Case/A0000001',
                     dataType: 'json',
                     cache :false,
                     headers: {"Authorization" : accToken},
@@ -371,7 +371,7 @@
             url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token',
             dataType: 'json',
             cache :false,
-            data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},
+            data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB4dQ93IcaapZkUvbEw9B7jwftQZeU.SXpH6bVf4C0uUtZfA8hgvk9EE4vryy", "client_secret":"F476E3521CAC6A25DEF4B55A6E7A4BA120C5B593CA7C340014838C9F110E7394","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_dL.vrrxEbJ4cNXYleGM0KzF6TX81pNGq0Siw8n_Om73G64gz"},
             success : function (connectData) {
                 // アクセストークン
                 var accToken = 'Bearer ' + connectData.access_token;
@@ -391,7 +391,7 @@
                 $.ajax({
                     type: 'POST',
                     crossOrigin: true,
-                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/',
+                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/Case/',
                     cache :false,
                     headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
                     dataType: 'json',
