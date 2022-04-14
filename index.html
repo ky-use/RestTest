@@ -282,7 +282,7 @@
                <td class="CreatedDate"></td>
                <td class="Priority"></td>
                <td class="Subject"></td>
-               <td class="Comments"></td>
+               <td class="Description"></td>
            </tr>
         </template>
         <div class="box_con02">
@@ -302,8 +302,8 @@
                         <td><input type="text" name="Subject" id="Subject" cols="50" rows="5"></input></td>
                     </tr>
                     <tr>
-                      <th>コメント</th>
-                      <td><textarea name="Comments" id="Comments" cols="50" rows="5"></textarea></td>
+                      <th>説明</th>
+                      <td><textarea name="Description" id="Description" cols="50" rows="5"></textarea></td>
                   </tr>
                 </table>
                 <p class="btn">
@@ -311,7 +311,7 @@
                 </p>
                 <p>過去のケース</p>
                 <table id="pastCase" class="formTable">
-                    <tr><th>登録日</th><th>優先度</th><th>件名</th><th>コメント</th></tr>
+                    <tr><th>登録日</th><th>優先度</th><th>件名</th><th>説明</th></tr>
                 </table>
             </form>
         </div>
@@ -350,7 +350,7 @@
                                 clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
                                 clone.querySelector('.Priority').textContent = res[i].Priority;
                                 clone.querySelector('.Subject').textContent = res[i].Subject;
-                                clone.querySelector('.Comments').textContent = res[i].Comments;
+                                clone.querySelector('.Description').textContent = res[i].Description;
                                 // div#containerの中に追加
                                 document.getElementById('pastCase').appendChild(clone);
                               }
@@ -384,13 +384,13 @@
                 // 件名を取得
                 const SubjectValue = document.getElementById("Subject").value;
                 // コメントを取得
-                const CommentsValue = document.getElementById("Comments").value;
+                const DescriptionValue = document.getElementById("Description").value;
                 
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
                 inputData.Priority = PriorityValue;
                 inputData.Subject = SubjectValue;
-                inputData.Comments = CommentsValue;
+                inputData.Description = DescriptionValue;
                 
                 // Rest ApexへパラメータをJSON形式に変換
                 var data = JSON.stringify( inputData );
@@ -424,7 +424,7 @@
                               clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
                               clone.querySelector('.Priority').textContent = res[i].Priority;
                               clone.querySelector('.Subject').textContent = res[i].Subject;
-                              clone.querySelector('.Comments').textContent = res[i].Comments;
+                              clone.querySelector('.Description').textContent = res[i].Description;
                               
                               // div#containerの中に追加
                               document.getElementById('pastCase').appendChild(clone);
