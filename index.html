@@ -280,40 +280,35 @@
         <template id="template">
            <tr>
                <td class="CreatedDate"></td>
-               <td class="Classification__c"></td>
-               <td class="Inquiry__c"></td>
+               <td class="Type"></td>
+               <td class="Description"></td>
            </tr>
         </template>
         <div class="box_con02">
-            <form id="inquiryForm">
-                <p>お問い合わせ</p>
+            <form id="CaseForm">
+                <p>ケース</p>
                 <table class="formTable">
                     <tr>
-                        <th>ご用件</th>
-                        <td><select name="classification" id="classification">
-                            <option value="ATMについて">ATMについて</option>
-                            <option value="キャッシュカード・トークンについて">キャッシュカード・トークンについて</option>
-                            <option value="ログインパスワード・暗証番号・不明・変更について">ログインパスワード・暗証番号・不明・変更について</option>
-                            <option value="Visaデビットについて">Visaデビットについて</option>
-                            <option value="ローン・住宅ローンについて">ローン・住宅ローンについて</option>
-                            <option value="口座開設・口座利用開始について">口座開設・口座利用開始について</option>
-                            <option value="FX・投信・外貨預金について">FX・投信・外貨預金について</option>
-                            <option value="登録情報変更　住所変更等について">登録情報変更　住所変更等について</option>
-                            <option value="明細・振込・振替等について">明細・振込・振替等について</option>
-                            <option value="その他お問い合わせ">その他お問い合わせ</option>
+                        <th>種別</th>
+                        <td><select name="Type" id="Type">
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Electronic">Electronic</option>
+                            <option value="Structural">Structural</option>
+                            <option value="Other">Other</option>
                         </select></td>
                     </tr>
                     <tr>
-                        <th>お問い合わせ内容</th>
-                        <td><textarea name="inquiry" id="inquiry" cols="50" rows="5"></textarea></td>
+                        <th>説明</th>
+                        <td><textarea name="Description" id="Description" cols="50" rows="5"></textarea></td>
                     </tr>
                 </table>
                 <p class="btn">
                     <span><input type="button" onclick="send()" value="送信" /></span>
                 </p>
-                <p>過去のお問い合わせ内容</p>
-                <table id="pastInquiry" class="formTable">
-                    <tr><th>登録日</th><th>ご用件</th><th>お問い合わせ内容</th></tr>
+                <p>過去のケース</p>
+                <table id="pastCase" class="formTable">
+                    <tr><th>登録日</th><th>種別</th><th>説明</th></tr>
                 </table>
             </form>
         </div>
@@ -350,10 +345,10 @@
                                 var clone = template.content.cloneNode(true);
                                 // 複製したtemplate要素にデータを挿入
                                 clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
-                                clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
-                                clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
+                                clone.querySelector('.Type').textContent = res[i].Type;
+                                clone.querySelector('.Description').textContent = res[i].Description;
                                 // div#containerの中に追加
-                                document.getElementById('pastInquiry').appendChild(clone);
+                                document.getElementById('pastCase').appendChild(clone);
                             }
                         }
                     },
@@ -380,15 +375,15 @@
             success : function (connectData) {
                 // アクセストークン
                 var accToken = 'Bearer ' + connectData.access_token;
-                // ご用件を取得
-                const classificationValue = document.getElementById("classification").value;
-                // お問い合わせ内容を取得
-                const inquiryValue = document.getElementById("inquiry").value;
+                // 種別を取得
+                const TypeValue = document.getElementById("Type").value;
+                // 説明を取得
+                const DescriptionValue = document.getElementById("Description").value;
                 
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
-                inputData.Classification = classificationValue;
-                inputData.Inquiry = inquiryValue;
+                inputData.Type = TypeValue;
+                inputData.Description = DescriptionValue;
 
                 // Rest ApexへパラメータをJSON形式に変換
                 var data = JSON.stringify( inputData );
@@ -403,14 +398,14 @@
                     data : data,
                     success : function (res) {
                         if(res.length != 0){
-                            var formElement = document.getElementById('inquiryForm');
+                            var formElement = document.getElementById('CaseForm');
                             formElement.reset();
                     
-                            var oldPastInquiry = document.getElementById('pastInquiry');
-                            var removeOldPastInquiry = oldPastInquiry.querySelectorAll('tr');
+                            var oldPastCase = document.getElementById('pastCase');
+                            var removeOldPastCase = oldPastCase.querySelectorAll('tr');
                     
-                            for(var i = 1; i < removeOldPastInquiry.length; i++){
-                                removeOldPastInquiry[i].parentNode.removeChild(removeOldPastInquiry[i])
+                            for(var i = 1; i < removeOldPastCase.length; i++){
+                                removeOldPastCase[i].parentNode.removeChild(removeOldPastCase[i])
                             }
                             // template要素を取得
                             var template = document.getElementById('template');
@@ -420,11 +415,11 @@
 
                                 // 複製したtemplate要素にデータを挿入
                                 clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
-                                clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
-                                clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
+                                clone.querySelector('.Type').textContent = res[i].Type;
+                                clone.querySelector('.Description').textContent = res[i].Description;
 
                                 // div#containerの中に追加
-                                document.getElementById('pastInquiry').appendChild(clone);
+                                document.getElementById('pastCase').appendChild(clone);
                             }
                         }
                     },
