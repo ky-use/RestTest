@@ -280,8 +280,9 @@
         <template id="template">
            <tr>
                <td class="CreatedDate"></td>
-               <td class="Type"></td>
+               <td class="Priority"></td>
                <td class="Subject"></td>
+               <td class="Comments"></td>
            </tr>
         </template>
         <div class="box_con02">
@@ -289,26 +290,28 @@
                 <p>ケース</p>
                 <table class="formTable">
                     <tr>
-                        <th>種別</th>
-                        <td><select name="Type" id="Type">
-                            <option value="Mechanical">Mechanical</option>
-                            <option value="Electrical">Electrical</option>
-                            <option value="Electronic">Electronic</option>
-                            <option value="Structural">Structural</option>
-                            <option value="Other">Other</option>
+                        <th>優先度</th>
+                        <td><select name="Priority" id="Priority">
+                            <option value="High">高</option>
+                            <option value="Medium">中</option>
+                            <option value="Low">低</option>
                         </select></td>
                     </tr>
                     <tr>
                         <th>件名</th>
-                        <td><textarea name="Subject" id="Subject" cols="50" rows="5"></textarea></td>
+                        <td><input type="text" name="Subject" id="Subject" cols="50" rows="5"></input></td>
                     </tr>
+                    <tr>
+                      <th>コメント</th>
+                      <td><textarea name="Comments" id="Comments" cols="50" rows="5"></textarea></td>
+                  </tr>
                 </table>
                 <p class="btn">
                     <span><input type="button" onclick="send()" value="送信" /></span>
                 </p>
                 <p>過去のケース</p>
                 <table id="pastCase" class="formTable">
-                    <tr><th>登録日</th><th>種別</th><th>件名</th></tr>
+                    <tr><th>登録日</th><th>優先度</th><th>件名</th><th>コメント</th></tr>
                 </table>
             </form>
         </div>
@@ -345,23 +348,24 @@
                                 var clone = template.content.cloneNode(true);
                                 // 複製したtemplate要素にデータを挿入
                                 clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
-                                clone.querySelector('.Type').textContent = res[i].Type;
+                                clone.querySelector('.Priority').textContent = res[i].Priority;
                                 clone.querySelector('.Subject').textContent = res[i].Subject;
+                                clone.querySelector('.Comments').textContent = res[i].Comments;
                                 // div#containerの中に追加
                                 document.getElementById('pastCase').appendChild(clone);
+                              }
                             }
-                        }
-                    },
+                          },
                     error : function (data, errorThrown,status) {
                         
                     }
                 })
                 
-            },
+              },
             error : function (data, errorThrown,status) {
             }
         });
-    }
+      }
 
     function send() {
         // アクセストークン取得（リフレッシュトークンフロー） Ajax
@@ -373,18 +377,21 @@
             cache :false,
             data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB4dQ93IcaapZkUvbEw9B7jwftQZeU.SXpH6bVf4C0uUtZfA8hgvk9EE4vryy", "client_secret":"F476E3521CAC6A25DEF4B55A6E7A4BA120C5B593CA7C340014838C9F110E7394","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_dL.vrrxEbJ4cNXYleGM0KzF6TX81pNGq0Siw8n_Om73G64gz"},
             success : function (connectData) {
-                // アクセストークン
+              // アクセストークン
                 var accToken = 'Bearer ' + connectData.access_token;
-                // 種別を取得
-                const TypeValue = document.getElementById("Type").value;
-                // 説明を取得
+                // 優先度を取得
+                const PriorityValue = document.getElementById("Priority").value;
+                // 件名を取得
                 const SubjectValue = document.getElementById("Subject").value;
+                // コメントを取得
+                const CommentsValue = document.getElementById("Comments").value;
                 
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
-                inputData.Type = TypeValue;
+                inputData.Priority = PriorityValue;
                 inputData.Subject = SubjectValue;
-
+                inputData.Comments = CommentsValue;
+                
                 // Rest ApexへパラメータをJSON形式に変換
                 var data = JSON.stringify( inputData );
                 
@@ -397,29 +404,30 @@
                     dataType: 'json',
                     data : data,
                     success : function (res) {
-                        if(res.length != 0){
+                      if(res.length != 0){
                             var formElement = document.getElementById('CaseForm');
                             formElement.reset();
                     
                             var oldPastCase = document.getElementById('pastCase');
                             var removeOldPastCase = oldPastCase.querySelectorAll('tr');
-                    
+                            
                             for(var i = 1; i < removeOldPastCase.length; i++){
-                                removeOldPastCase[i].parentNode.removeChild(removeOldPastCase[i])
+                              removeOldPastCase[i].parentNode.removeChild(removeOldPastCase[i])
                             }
                             // template要素を取得
                             var template = document.getElementById('template');
                             for(var i = 0; i < res.length; i++){
-                                // template要素の内容を複製
-                                var clone = template.content.cloneNode(true);
-
-                                // 複製したtemplate要素にデータを挿入
-                                clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
-                                clone.querySelector('.Type').textContent = res[i].Type;
-                                clone.querySelector('.Subject').textContent = res[i].Subject;
-
-                                // div#containerの中に追加
-                                document.getElementById('pastCase').appendChild(clone);
+                              // template要素の内容を複製
+                              var clone = template.content.cloneNode(true);
+                              
+                              // 複製したtemplate要素にデータを挿入
+                              clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
+                              clone.querySelector('.Priority').textContent = res[i].Priority;
+                              clone.querySelector('.Subject').textContent = res[i].Subject;
+                              clone.querySelector('.Comments').textContent = res[i].Comments;
+                              
+                              // div#containerの中に追加
+                              document.getElementById('pastCase').appendChild(clone);
                             }
                         }
                     },
