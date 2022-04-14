@@ -281,7 +281,7 @@
            <tr>
                <td class="CreatedDate"></td>
                <td class="Type"></td>
-               <td class="Description"></td>
+               <td class="Subject"></td>
            </tr>
         </template>
         <div class="box_con02">
@@ -299,8 +299,8 @@
                         </select></td>
                     </tr>
                     <tr>
-                        <th>説明</th>
-                        <td><textarea name="Description" id="Description" cols="50" rows="5"></textarea></td>
+                        <th>件名</th>
+                        <td><textarea name="Subject" id="Subject" cols="50" rows="5"></textarea></td>
                     </tr>
                 </table>
                 <p class="btn">
@@ -308,7 +308,7 @@
                 </p>
                 <p>過去のケース</p>
                 <table id="pastCase" class="formTable">
-                    <tr><th>登録日</th><th>種別</th><th>説明</th></tr>
+                    <tr><th>登録日</th><th>種別</th><th>件名</th></tr>
                 </table>
             </form>
         </div>
@@ -346,7 +346,7 @@
                                 // 複製したtemplate要素にデータを挿入
                                 clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
                                 clone.querySelector('.Type').textContent = res[i].Type;
-                                clone.querySelector('.Description').textContent = res[i].Description;
+                                clone.querySelector('.Subject').textContent = res[i].Subject;
                                 // div#containerの中に追加
                                 document.getElementById('pastCase').appendChild(clone);
                             }
@@ -378,12 +378,12 @@
                 // 種別を取得
                 const TypeValue = document.getElementById("Type").value;
                 // 説明を取得
-                const DescriptionValue = document.getElementById("Description").value;
+                const SubjectValue = document.getElementById("Subject").value;
                 
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
                 inputData.Type = TypeValue;
-                inputData.Description = DescriptionValue;
+                inputData.Subject = SubjectValue;
 
                 // Rest ApexへパラメータをJSON形式に変換
                 var data = JSON.stringify( inputData );
@@ -416,7 +416,7 @@
                                 // 複製したtemplate要素にデータを挿入
                                 clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
                                 clone.querySelector('.Type').textContent = res[i].Type;
-                                clone.querySelector('.Description').textContent = res[i].Description;
+                                clone.querySelector('.Subject').textContent = res[i].Subject;
 
                                 // div#containerの中に追加
                                 document.getElementById('pastCase').appendChild(clone);
